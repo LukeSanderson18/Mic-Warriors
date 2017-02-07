@@ -47,7 +47,7 @@ public class NoteTest : MonoBehaviour {
         {
             text.text = "G";
         }
-        if (200 < frequency && frequency < 206)
+        if ((200 < frequency && frequency < 206) ||( frequency == 405))
         {
             text.text = "A";
         }
