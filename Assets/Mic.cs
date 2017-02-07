@@ -12,6 +12,8 @@ public class Mic : MonoBehaviour
     public float sensitivity = 100f;
     public float loud = 0;
     public int samplerate = 11024;
+
+    public float frequency = 0f;
     // Use this for initialization
     void Start()
     {
@@ -69,6 +71,7 @@ public class Mic : MonoBehaviour
     void Update()
     {
         loud = AverageVol() * sensitivity;
+        frequency = GetFundamentalFrequency();
         transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "" + loud;
     }
 }
