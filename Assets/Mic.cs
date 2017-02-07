@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using UnityEngine.Microphone;
 
 public class Mic : MonoBehaviour
 {
@@ -26,9 +27,9 @@ public class Mic : MonoBehaviour
         audio.loop = true;
         audio.mute = true;
         //record from first audio device, loop it, 10 seconds length, Hz;
-        audio.clip = Microphone.Start(null, true, 1000, 44100);
+        audio.clip = Microphone.Start(null, true, 10, 44100);
 
-        while (!(Microphone.GetPosition(Microphone.devices[0]) > 0)) { } // Wait until the recording has started
+        while (!(Microphone.GetPosition(null) > 0)) { } // Wait until the recording has started
         audio.mute = false;
         audio.Play();
 

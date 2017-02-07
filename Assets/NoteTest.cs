@@ -23,37 +23,50 @@ public class NoteTest : MonoBehaviour {
     void Update() 
     {
         int frequency = (int)mic.frequency;
-        if (frequency > 40)
-        {
-          //  text.text = frequency.ToString();
-        }
-        if (frequency == 239 || frequency == 240)
+        
+        //PC FREQUENCIES
+        if (frequency == 239 || frequency == 240
+            || frequency == 479 || frequency == 480 )
         {
             text.text = "C";
         }
-        if (frequency == 269 || frequency == 270)
+        if (frequency == 269 || frequency == 270
+            || frequency == 539 || frequency == 540)
         {
             text.text = "D";
         }
-        if (frequency == 302 || frequency == 454)
+        if (frequency == 302 || frequency == 454
+            || frequency == 604 || frequency == 605
+            || frequency == 606)
         {
             text.text = "E";
         }
-        if (frequency == 321 || frequency == 322)
+        if (frequency == 321 || frequency == 322
+            || frequency == 640 || frequency == 641)
         {
             text.text = "F";
         }
-        if (frequency == 360 || frequency == 361)
+        if (frequency == 360 || frequency == 361
+            || frequency == 721 || frequency ==718)
         {
             text.text = "G";
         }
-        if ((200 < frequency && frequency < 206) ||( frequency == 405))
+        if ((200 < frequency && frequency < 206) ||( frequency == 405)
+            || frequency == 403)
         {
             text.text = "A";
         }
-        if (frequency == 227 || frequency == 228)
+        if (frequency == 227 || frequency == 228
+            || frequency == 453 || frequency == 454)
         {
             text.text = "B";
+        }
+
+        // MOBILE FREQUENCIES
+
+        else
+        {
+            text.text = ""+frequency;
         }
 
         switch (Input.inputString)
