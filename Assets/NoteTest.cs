@@ -43,7 +43,7 @@ public class NoteTest : MonoBehaviour {
         {
             text.text = "F";
         }
-        if (frequency == 360 || frequency == 360)
+        if (frequency == 360 || frequency == 361)
         {
             text.text = "G";
         }
