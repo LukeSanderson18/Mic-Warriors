@@ -11,6 +11,7 @@ public class Mic : MonoBehaviour
 
     public float sensitivity = 100f;
     public float loud = 0;
+    public int samplerate = 11024;
     // Use this for initialization
     void Start()
     {
@@ -43,6 +44,26 @@ public class Mic : MonoBehaviour
             i += Mathf.Abs(asda);
         }
         return i / data.Length; //get the mean
+    }
+
+    float GetFundamentalFrequency()
+    {
+        float fundamentalFrequency = 0f;
+        float[] data = new float[8192];
+        audio.GetSpectrumData(data, 0, FFTWindow.BlackmanHarris);
+
+        float strongestTemp = 0f;
+        int strongestFreq = 0;
+        for (int i = 1; i < 8192; i++)
+        {
+            if (strongestTemp < data[i])
+            {
+                strongestTemp = data[i];
+                strongestFreq = i;
+            }
+        }
+        fundamentalFrequency = strongestFreq * samplerate / 8192;
+        return fundamentalFrequency;
     }
 
     void Update()
