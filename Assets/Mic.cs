@@ -72,6 +72,6 @@ public class Mic : MonoBehaviour
     {
         loud = AverageVol() * sensitivity;
         frequency = GetFundamentalFrequency();
-        transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "" + loud;
+        //transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "" + loud;
     }
 }
