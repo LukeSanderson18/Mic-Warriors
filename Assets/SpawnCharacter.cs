@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SpawnCharacter : MonoBehaviour {
+public class SpawnCharacter : MonoBehaviour
+{
 
+    public GameObject NoteTester;
+    public Text nameText;
     private string characters = "12345678";
     SpriteRenderer man_sprite;
     SpriteRenderer hair_sprite;
@@ -13,6 +17,8 @@ public class SpawnCharacter : MonoBehaviour {
     public int name1 = 0;
     public int name2 = 0;
     public int sum = 0;
+    string code = "";
+    int delay = 0;
 
 
     public Color[] man_colours;
@@ -35,11 +41,10 @@ public class SpawnCharacter : MonoBehaviour {
         wholeString = textFile.text;
 
     }
-	// Update is called once per frame
-	void Generate () 
+    // Update is called once per frame
+    public void Generate()
     {
-        string code = "";
-
+        code = "";
         for (int i = 0; i < 7; i++)
         {
             int a = 0;
@@ -55,7 +60,7 @@ public class SpawnCharacter : MonoBehaviour {
             }
             if (i == 2)         //SHIELD
             {
-                a = Random.Range(0, characters.Length-3);
+                a = Random.Range(0, characters.Length - 3);
                 shield.sprite = shields[a];
             }
             if (i == 3) //gender
@@ -87,20 +92,22 @@ public class SpawnCharacter : MonoBehaviour {
                 name2 = a;
                 if (gender == "Male")
                 {
-                    sum = (name1*10 + name2);
-                    name = 
+                    sum = (name1 * 10 + name2);
+                    name =
                         eachLine[sum];
                 }
                 else
                 {
-                    sum = (name1*10 + name2);
+                    sum = (name1 * 10 + name2);
 
                     name = eachLine[78 + sum];
                 }
+                nameText.text = name;
+
             }
             if (i == 6)
             {
-                
+
                 a = Random.Range(0, 3);
                 if (gender == "Male")
                 {
@@ -112,16 +119,38 @@ public class SpawnCharacter : MonoBehaviour {
                 }
             }
 
-            
 
-                
+
+
             //int a = Random.Range(0, characters.Length);
             code = code + characters[a];
         }
 
         print(code);
-		
-	}
+
+    }
+
+    public void ScreamFunction()
+    {
+        StartCoroutine(Scream());
+    }
+    IEnumerator Scream()
+    {
+        foreach (char c in code)
+        {
+            //Invoke("PlayNote", 0);
+            int noteInt = c-48;
+            print(noteInt);
+
+            NoteTester.GetComponent<NoteTest>().transform_list[noteInt].GetComponent<AudioSource>().Play();
+
+
+            yield return new WaitForSeconds(0.1f);
+
+        }
+    }
+
+
 
     void Update()
     {
@@ -129,6 +158,10 @@ public class SpawnCharacter : MonoBehaviour {
         {
             Generate();
 
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ScreamFunction();
         }
     }
 }

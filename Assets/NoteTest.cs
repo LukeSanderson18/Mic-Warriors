@@ -66,7 +66,7 @@ public class NoteTest : MonoBehaviour {
 
         else
         {
-            text.text = ""+frequency;
+           // text.text = ""+frequency;
         }
 
         switch (Input.inputString)
