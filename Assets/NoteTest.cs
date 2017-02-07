@@ -25,7 +25,35 @@ public class NoteTest : MonoBehaviour {
         int frequency = (int)mic.frequency;
         if (frequency > 40)
         {
-            text.text = frequency.ToString();
+          //  text.text = frequency.ToString();
+        }
+        if (frequency == 239 || frequency == 240)
+        {
+            text.text = "C";
+        }
+        if (frequency == 269 || frequency == 270)
+        {
+            text.text = "D";
+        }
+        if (frequency == 302 || frequency == 454)
+        {
+            text.text = "E";
+        }
+        if (frequency == 321 || frequency == 322)
+        {
+            text.text = "F";
+        }
+        if (frequency == 360 || frequency == 360)
+        {
+            text.text = "G";
+        }
+        if (200 < frequency && frequency < 206)
+        {
+            text.text = "A";
+        }
+        if (frequency == 227 || frequency == 228)
+        {
+            text.text = "B";
         }
 
         switch (Input.inputString)
