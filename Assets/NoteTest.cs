@@ -33,7 +33,8 @@ public class NoteTest : MonoBehaviour
                 + finals[2].ToString() + finals[3].ToString()
                 + finals[4].ToString() + finals[5].ToString() +
                 finals[6].ToString();
-                
+
+           // GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(finalString);
         }
         if (Input.GetKey(KeyCode.L))
         {

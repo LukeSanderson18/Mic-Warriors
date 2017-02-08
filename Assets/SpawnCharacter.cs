@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class SpawnCharacter : MonoBehaviour
 {
-
+    public GameObject husk;
+    public GameObject manPrefab;
+    public GameObject hairPrefab;
+    public GameObject shieldPrefab;
     public GameObject NoteTester;
     public Text nameText;
     private string characters = "12345678";
@@ -34,16 +37,28 @@ public class SpawnCharacter : MonoBehaviour
 
     void Start()
     {
-        man_sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        hair_sprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        shield = transform.GetChild(2).GetComponent<SpriteRenderer>();
-
-        wholeString = textFile.text;
+        
 
     }
     // Update is called once per frame
     public void Generate()
     {
+        GameObject an1 = Instantiate(manPrefab);
+        GameObject an2 = Instantiate(hairPrefab);
+        GameObject an3 = Instantiate(shieldPrefab);
+
+        an1.transform.parent = transform;
+        an2.transform.parent = transform;
+        an3.transform.parent = transform;
+
+        an1.transform.localScale = an2.transform.localScale = an3.transform.localScale = Vector3.one;
+
+        man_sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        hair_sprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        shield = transform.GetChild(2).GetComponent<SpriteRenderer>();
+
+        wholeString = textFile.text;
+        man_sprite.GetComponent<SpriteRenderer>().enabled = true;
         code = "";
         for (int i = 0; i < 7; i++)
         {
@@ -102,7 +117,7 @@ public class SpawnCharacter : MonoBehaviour
 
                     name = eachLine[78 + sum];
                 }
-                nameText.text = name;
+                nameText.text = "Say hello to " +name + "!";
 
             }
             if (i == 6)
@@ -127,7 +142,21 @@ public class SpawnCharacter : MonoBehaviour
         }
 
         print(code);
+        GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(code);
+        Invoke("Detach", 1f);
 
+
+    }
+
+    void Detach()
+    {
+       GameObject an =  Instantiate(husk);
+       an.name = code;
+       code = "";
+       for (int i = transform.childCount; i > 0; i--)           //have to do it backwards for some effing reason.
+       {
+           transform.GetChild(0).parent = an.transform;
+       }
     }
 
     public void ScreamFunction()
