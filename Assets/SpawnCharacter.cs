@@ -20,7 +20,7 @@ public class SpawnCharacter : MonoBehaviour
     public int name1 = 0;
     public int name2 = 0;
     public int sum = 0;
-    string code = "";
+    string code = "9";
     int delay = 0;
 
 
@@ -34,14 +34,16 @@ public class SpawnCharacter : MonoBehaviour
     private string wholeString;
     private List<string> eachLine;
 
+    List<int> digits = new List<int>();
+
 
     void Start()
     {
-        
+        Generate(int.Parse(code));
 
     }
     // Update is called once per frame
-    public void Generate()
+    public void Generate(int managerCode)
     {
         GameObject an1 = Instantiate(manPrefab);
         GameObject an2 = Instantiate(hairPrefab);
@@ -59,36 +61,69 @@ public class SpawnCharacter : MonoBehaviour
 
         wholeString = textFile.text;
         man_sprite.GetComponent<SpriteRenderer>().enabled = true;
-        code = "";
+        code = "9";
+        foreach (int digit in managerCode.ToString())
+        {
+            digits.Add((int)digit);
+
+        }
         for (int i = 0; i < 7; i++)
         {
             int a = 0;
             if (i == 0)         //SKIN COLOUR
             {
-                a = Random.Range(0, characters.Length - 3);
+                if (managerCode == 9)
+                {
+                    a = Random.Range(0, characters.Length - 3);
+                }
+                else
+                {
+                    a = digits[0];
+                }
                 man_sprite.color = man_colours[a];
             }
             if (i == 1)         //HAIR COLOUR
             {
-                a = Random.Range(0, characters.Length - 2);
+                if (managerCode == 9)
+                {
+                    a = Random.Range(0, characters.Length - 2);
+                }
+                else
+                {
+                    a = digits[1];
+                }
                 hair_sprite.color = hair_colours[a];
             }
             if (i == 2)         //SHIELD
             {
-                a = Random.Range(0, characters.Length - 3);
+                if (managerCode == 9)
+                {
+                    a = Random.Range(0, characters.Length - 3);
+                }
+                else
+                {
+                    a = digits[2];
+                }
                 shield.sprite = shields[a];
             }
             if (i == 3) //gender
             {
-                a = Random.Range(0, 2);
-                if (a == 0)
+                if (managerCode == 9)
                 {
-                    gender = "Male";
+                    a = Random.Range(0, 2);
+                    if (a == 0)
+                    {
+                        gender = "Male";
+                    }
+                    else
+                    {
+                        gender = "Female";
+                    }
                 }
                 else
                 {
-                    gender = "Female";
-                }
+                    a = digits[3];
+                }                
             }
             if (i == 4)
             {
@@ -98,12 +133,26 @@ public class SpawnCharacter : MonoBehaviour
                             wholeString.Split("\n"[0]));
 
 
-                a = Random.Range(0, 8);
+                if (managerCode == 9)
+                {
+                    a = Random.Range(0, 8);
+                }
+                else
+                {
+                    a = digits[4];
+                }
                 name1 = a;
             }
             if (i == 5)
             {
-                a = Random.Range(0, 8);
+                if (managerCode == 9)
+                {
+                    a = Random.Range(0, 8);
+                }
+                else
+                {
+                    a = digits[5];
+                }
                 name2 = a;
                 if (gender == "Male")
                 {
@@ -122,8 +171,14 @@ public class SpawnCharacter : MonoBehaviour
             }
             if (i == 6)
             {
-
-                a = Random.Range(0, 3);
+                if (managerCode == 9)
+                {
+                    a = Random.Range(0, 3);
+                }
+                else
+                {
+                    a = digits[6];
+                }
                 if (gender == "Male")
                 {
                     hair_sprite.sprite = hair_types[a];
@@ -133,9 +188,6 @@ public class SpawnCharacter : MonoBehaviour
                     hair_sprite.sprite = hair_types[a + 3];
                 }
             }
-
-
-
 
             //int a = Random.Range(0, characters.Length);
             code = code + characters[a];
@@ -151,6 +203,12 @@ public class SpawnCharacter : MonoBehaviour
     void Detach()
     {
        GameObject an =  Instantiate(husk);
+       if (int.Parse(code) > 9000000)
+       {
+           int newint = int.Parse(code);
+           newint -= 90000000;
+           code = newint.ToString();
+       }
        an.name = code;
        code = "";
        for (int i = transform.childCount; i > 0; i--)           //have to do it backwards for some effing reason.
@@ -185,7 +243,7 @@ public class SpawnCharacter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Generate();
+            Generate(int.Parse(code));
 
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
