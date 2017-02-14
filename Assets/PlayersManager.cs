@@ -12,10 +12,22 @@ public class PlayersManager : MonoBehaviour {
         for (int i = 0; i < players.Count; i++)
         {
             players[i] = int.Parse(PlayerPrefs.GetString("players" + i));
-            GameObject.Find("ManTest").GetComponent<SpawnCharacter>().Generate(players[i]);
-
+            if (players[i] != 0)
+            {
+                StartCoroutine(Create(i, players[i]));
+               // Invoke("Create", i);
+            }
         }
 
+    }
+
+    IEnumerator Create(float delayTime, int playerTING)
+    {
+        yield return new WaitForSeconds(delayTime+1.8f);
+        //GameObject.Find("ManTest").GetComponent<SpawnCharacter>().Generate(playerTING);
+    }
+    void Create()
+    {
     }
 
     void Update()
@@ -31,14 +43,9 @@ public class PlayersManager : MonoBehaviour {
 
         for (int i = 0; i < players.Count; i++)
         {
-            if (players[i] > 9000000)
-            {
-                players[i] -= 90000000;
-            }
             if (players[i] == 0)
             {
                 players[i] = int.Parse(newString);
-                players[i] -= 90000000;
                 PlayerPrefs.SetString("players" + i, newPlayerString);
                 print("adsfasdfasdf asdf asdf asdf " + PlayerPrefs.GetString("players" + i));
                 break;

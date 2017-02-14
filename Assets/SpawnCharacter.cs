@@ -20,7 +20,7 @@ public class SpawnCharacter : MonoBehaviour
     public int name1 = 0;
     public int name2 = 0;
     public int sum = 0;
-    string code = "9";
+    public string code = "0";
     int delay = 0;
 
 
@@ -39,11 +39,11 @@ public class SpawnCharacter : MonoBehaviour
 
     void Start()
     {
-        Generate(int.Parse(code));
+        //Generate(int.Parse(code));
 
     }
     // Update is called once per frame
-    public void Generate(int managerCode)
+    public void Generate()
     {
         GameObject an1 = Instantiate(manPrefab);
         GameObject an2 = Instantiate(hairPrefab);
@@ -61,69 +61,37 @@ public class SpawnCharacter : MonoBehaviour
 
         wholeString = textFile.text;
         man_sprite.GetComponent<SpriteRenderer>().enabled = true;
-        code = "9";
-        foreach (int digit in managerCode.ToString())
-        {
-            digits.Add((int)digit);
 
-        }
         for (int i = 0; i < 7; i++)
         {
             int a = 0;
             if (i == 0)         //SKIN COLOUR
             {
-                if (managerCode == 9)
-                {
-                    a = Random.Range(0, characters.Length - 3);
-                }
-                else
-                {
-                    a = digits[0];
-                }
+                print("CREATING NEW ONE!");
+                a = Random.Range(0, characters.Length - 3);
                 man_sprite.color = man_colours[a];
             }
             if (i == 1)         //HAIR COLOUR
             {
-                if (managerCode == 9)
-                {
-                    a = Random.Range(0, characters.Length - 2);
-                }
-                else
-                {
-                    a = digits[1];
-                }
+                a = Random.Range(0, characters.Length - 2);
                 hair_sprite.color = hair_colours[a];
             }
             if (i == 2)         //SHIELD
             {
-                if (managerCode == 9)
-                {
-                    a = Random.Range(0, characters.Length - 3);
-                }
-                else
-                {
-                    a = digits[2];
-                }
+                a = Random.Range(0, characters.Length - 3);
                 shield.sprite = shields[a];
             }
             if (i == 3) //gender
             {
-                if (managerCode == 9)
+                a = Random.Range(0, 2);
+                if (a == 0)
                 {
-                    a = Random.Range(0, 2);
-                    if (a == 0)
-                    {
-                        gender = "Male";
-                    }
-                    else
-                    {
-                        gender = "Female";
-                    }
+                    gender = "Male";
                 }
                 else
                 {
-                    a = digits[3];
-                }                
+                    gender = "Female";
+                }
             }
             if (i == 4)
             {
@@ -132,27 +100,12 @@ public class SpawnCharacter : MonoBehaviour
                 eachLine.AddRange(
                             wholeString.Split("\n"[0]));
 
-
-                if (managerCode == 9)
-                {
-                    a = Random.Range(0, 8);
-                }
-                else
-                {
-                    a = digits[4];
-                }
+                a = Random.Range(0, 8);
                 name1 = a;
             }
             if (i == 5)
             {
-                if (managerCode == 9)
-                {
-                    a = Random.Range(0, 8);
-                }
-                else
-                {
-                    a = digits[5];
-                }
+                a = Random.Range(0, 8);
                 name2 = a;
                 if (gender == "Male")
                 {
@@ -163,22 +116,14 @@ public class SpawnCharacter : MonoBehaviour
                 else
                 {
                     sum = (name1 * 10 + name2);
-
                     name = eachLine[78 + sum];
                 }
-                nameText.text = "Say hello to " +name + "!";
+                nameText.text = "Say hello to " + name + "!";
 
             }
             if (i == 6)
             {
-                if (managerCode == 9)
-                {
-                    a = Random.Range(0, 3);
-                }
-                else
-                {
-                    a = digits[6];
-                }
+                a = Random.Range(0, 3);
                 if (gender == "Male")
                 {
                     hair_sprite.sprite = hair_types[a];
@@ -195,26 +140,26 @@ public class SpawnCharacter : MonoBehaviour
 
         print(code);
         GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(code);
-        Invoke("Detach", 1f);
+        Invoke("Detach", 0.2f);
 
 
     }
 
     void Detach()
     {
-       GameObject an =  Instantiate(husk);
-       if (int.Parse(code) > 9000000)
-       {
-           int newint = int.Parse(code);
-           newint -= 90000000;
-           code = newint.ToString();
-       }
-       an.name = code;
-       code = "";
-       for (int i = transform.childCount; i > 0; i--)           //have to do it backwards for some effing reason.
-       {
-           transform.GetChild(0).parent = an.transform;
-       }
+        GameObject an = Instantiate(husk);
+        if (int.Parse(code) > 9000000)
+        {
+            int newint = int.Parse(code);
+            newint -= 90000000;
+            code = newint.ToString();
+        }
+        an.name = code;
+        //code = "";
+        for (int i = transform.childCount; i > 0; i--)           //have to do it backwards for some effing reason.
+        {
+            transform.GetChild(0).parent = an.transform;
+        }
     }
 
     public void ScreamFunction()
@@ -226,7 +171,7 @@ public class SpawnCharacter : MonoBehaviour
         foreach (char c in code)
         {
             //Invoke("PlayNote", 0);
-            int noteInt = c-48;
+            int noteInt = c - 48;
             print(noteInt);
 
             NoteTester.GetComponent<NoteTest>().transform_list[noteInt].GetComponent<AudioSource>().Play();
@@ -243,7 +188,7 @@ public class SpawnCharacter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Generate(int.Parse(code));
+            Generate();
 
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
