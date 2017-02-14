@@ -36,6 +36,11 @@ public class PlayersManager : MonoBehaviour {
         {
             PlayerPrefs.DeleteAll();
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(players[0]);
+        }
     }
     public void AddPlayer(string newPlayerString)
     {
