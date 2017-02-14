@@ -36,7 +36,9 @@ public class SpawnCharacter : MonoBehaviour
 
     public List<int> digits = new List<int>();
 
-    public void Generate()
+
+
+    public void Generate()          //for first person to be created only!!!!!
     {
         code = null;
 
@@ -132,7 +134,11 @@ public class SpawnCharacter : MonoBehaviour
             code = code + characters[a];
         }
 
-        print(code);
+        print(PlayerPrefs.GetString("FirstPersonCode"));
+        if (PlayerPrefs.GetString("FirstPersonCode") == "")
+        {
+            PlayerPrefs.SetString("FirstPersonCode", code);
+        }
         GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(code);
         Invoke("Detach", 0.2f);
 
@@ -161,82 +167,35 @@ public class SpawnCharacter : MonoBehaviour
         wholeString = textFile.text;
         man_sprite.GetComponent<SpriteRenderer>().enabled = true;
 
+
         foreach (char digit in othercode.ToString())
         {
-            print(digit);
             digits.Add((int)(digit-48));
 
         }
-        for (int i = 0; i < 7; i++)
-        {
-            int a = 0;
-            a = digits[i];
-            code = code + characters[a];
-
-            man_sprite.color = man_colours[digits[0]];
-            hair_sprite.color = hair_colours[digits[1]];
-            shield.sprite = shields[digits[2]];
-
-            if (digits[3] == 0)
-            {
-                gender = "Male";
-            }
-            else
-            {
-                gender = "Female";
-            }
-
-            eachLine = new List<string>();
-            eachLine.AddRange(
-                        wholeString.Split("\n"[0]));
-
-            name1 = digits[4];
-            name2 = digits[5];
-
-            if (gender == "Male")
-            {
-                sum = (name1 * 10 + name2);
-                name =
-                    eachLine[sum];
-            }
-            else
-            {
-                sum = (name1 * 10 + name2);
-                name = eachLine[78 + sum];
-            }
-            nameText.text = "Say hello to " + name + "!";
-
-            if (gender == "Male")
-            {
-                hair_sprite.sprite = hair_types[digits[6]];
-            }
-            else
-            {
-                hair_sprite.sprite = hair_types[digits[6] + 3];
-            }
-        }
-        /*
+       // print(othercode);
         for (int i = 0; i < 7; i++)
         {
             int a = 0;
             if (i == 0)         //SKIN COLOUR
             {
-                a = Random.Range(0, characters.Length - 3);
+                a = digits[0]-1;
+                print(a);
                 man_sprite.color = man_colours[a];
             }
             if (i == 1)         //HAIR COLOUR
             {
-                a = Random.Range(0, characters.Length - 2);
+                a = digits[1]-1;
                 hair_sprite.color = hair_colours[a];
             }
             if (i == 2)         //SHIELD
             {
-                a = Random.Range(0, characters.Length - 3);
+                a = digits[2]-1;
                 shield.sprite = shields[a];
             }
             if (i == 3) //gender
             {
-                a = Random.Range(0, 2);
+                a = digits[3]-1;
                 if (a == 0)
                 {
                     gender = "Male";
@@ -253,12 +212,12 @@ public class SpawnCharacter : MonoBehaviour
                 eachLine.AddRange(
                             wholeString.Split("\n"[0]));
 
-                a = Random.Range(0, 8);
+                a = digits[4]-1;
                 name1 = a;
             }
             if (i == 5)
             {
-                a = Random.Range(0, 8);
+                a = digits[5]-1;
                 name2 = a;
                 if (gender == "Male")
                 {
@@ -276,7 +235,7 @@ public class SpawnCharacter : MonoBehaviour
             }
             if (i == 6)
             {
-                a = Random.Range(0, 3);
+                a = digits[6]-1;
                 if (gender == "Male")
                 {
                     hair_sprite.sprite = hair_types[a];
@@ -286,15 +245,13 @@ public class SpawnCharacter : MonoBehaviour
                     hair_sprite.sprite = hair_types[a + 3];
                 }
             }
-
-            //int a = Random.Range(0, characters.Length);
             code = code + characters[a];
-        }
 
+
+        }
         print(code);
-        GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(code);
         Invoke("Detach", 0.2f);
-        */
+
 
     }
 
@@ -314,7 +271,7 @@ public class SpawnCharacter : MonoBehaviour
     }
     IEnumerator Scream()
     {
-        foreach (char c in code)
+        foreach (char c in PlayerPrefs.GetString("FirstPersonCode"))
         {
             //Invoke("PlayNote", 0);
             int noteInt = c - 48;

@@ -23,11 +23,8 @@ public class PlayersManager : MonoBehaviour {
 
     IEnumerator Create(float delayTime, int playerTING)
     {
-        yield return new WaitForSeconds(delayTime+1.8f);
-        //GameObject.Find("ManTest").GetComponent<SpawnCharacter>().Generate(playerTING);
-    }
-    void Create()
-    {
+        yield return new WaitForSeconds(delayTime+1.4f);
+        GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(playerTING);
     }
 
     void Update()
@@ -35,11 +32,12 @@ public class PlayersManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerPrefs.DeleteAll();
+            Application.LoadLevel(Application.loadedLevel);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(players[0]);
+         //   GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(players[0]);
         }
     }
     public void AddPlayer(string newPlayerString)
