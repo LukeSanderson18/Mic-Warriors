@@ -180,7 +180,6 @@ public class SpawnCharacter : MonoBehaviour
             if (i == 0)         //SKIN COLOUR
             {
                 a = digits[0]-1;
-                print(a);
                 man_sprite.color = man_colours[a];
             }
             if (i == 1)         //HAIR COLOUR

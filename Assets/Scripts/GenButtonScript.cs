@@ -22,12 +22,10 @@ public class GenButtonScript : MonoBehaviour
         if (GameObject.Find("Manager").GetComponent<PlayersManager>().players[0] == 0)
         {
             print(GameObject.Find("Manager").GetComponent<PlayersManager>().players[0]);
-            print("im allowed to live");
             gameObject.SetActive(true);
         }
         else
         {
-            print("kill me");
             gameObject.SetActive(false);
         }
     }
