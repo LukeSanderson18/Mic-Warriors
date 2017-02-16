@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayersManager : MonoBehaviour {
 
     public string newString;
+    public int totalPlayers;
     public List<int> players;
 	// Use this for initialization
     void Start()
@@ -15,7 +16,9 @@ public class PlayersManager : MonoBehaviour {
             if (players[i] != 0)
             {
                 StartCoroutine(Create(i, players[i]));
-               // Invoke("Create", i);
+                // Invoke("Create", i);
+                totalPlayers++;
+
             }
         }
 
@@ -23,7 +26,7 @@ public class PlayersManager : MonoBehaviour {
 
     IEnumerator Create(float delayTime, int playerTING)
     {
-        yield return new WaitForSeconds((delayTime/2)+0.2f);
+        yield return new WaitForSeconds((delayTime*0.25f)+0.4f);
         GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(playerTING);
     }
 

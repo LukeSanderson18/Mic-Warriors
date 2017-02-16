@@ -26,18 +26,18 @@ public class MonsterGenerator : MonoBehaviour
             print("true");
             if(PlayerPrefs.GetInt("monsterNumber") == 0)
             {
-                PlayerPrefs.SetInt("monsterNumber", 1);
+                PlayerPrefs.SetInt("monsterNumber", 2);
             }
             monsterNumber = PlayerPrefs.GetInt("monsterNumber");
         }
         else
         {
-            PlayerPrefs.SetInt("monsterNumber", 1);
+            PlayerPrefs.SetInt("monsterNumber", 2);
         }
 
         int randInt = Random.Range(0, monsterSprites.Length);
 
-        GameObject monster = Instantiate(monsterHusk, new Vector2(0, 2), Quaternion.identity);
+        GameObject monster = Instantiate(monsterHusk, new Vector2(-1, 2), Quaternion.identity);
         monster.transform.localScale = Vector3.one * 4;
         monster.name = monsterSprites[randInt].name;
         monster.transform.GetChild(0).GetComponent<TextMesh>().text = monster.name;

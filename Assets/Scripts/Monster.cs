@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
@@ -8,15 +9,25 @@ public class Monster : MonoBehaviour
     public int health;
     public int maxhealth;
     public int monsterNumber;
+    public Image img;
+    PlayersManager pm;
     // Use this for initialization
+    void Start()
+    {
+        img = transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        pm = GameObject.Find("Manager").GetComponent<PlayersManager>();
+    }
     void OnMouseDown()
     {
-        health--;
+        health-= pm.totalPlayers;
         GetComponent<Shake>().shakeDuration = 0.2f;
     }
 
     void Update()
     {
+        float div = (float)health / (float)maxhealth;
+        img.fillAmount = div;
+        print(health/maxhealth);
         if (health <= 0)
         {
             int min = PlayerPrefs.GetInt("monsterNumber");

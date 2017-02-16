@@ -40,109 +40,113 @@ public class SpawnCharacter : MonoBehaviour
 
     public void Generate()          //for first person to be created only!!!!!
     {
-        code = null;
-
-        GameObject an1 = Instantiate(manPrefab);
-        GameObject an2 = Instantiate(hairPrefab);
-        GameObject an3 = Instantiate(shieldPrefab);
-
-        an1.transform.parent = transform;
-        an2.transform.parent = transform;
-        an3.transform.parent = transform;
-
-        an1.transform.localScale = an2.transform.localScale = an3.transform.localScale = Vector3.one;
-
-        man_sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        hair_sprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        shield = transform.GetChild(2).GetComponent<SpriteRenderer>();
-
-        wholeString = textFile.text;
-        man_sprite.GetComponent<SpriteRenderer>().enabled = true;
-
-        for (int i = 0; i < 7; i++)
+        if (GameObject.Find("Manager").GetComponent<PlayersManager>().players[14] == 0)
         {
-            int a = 0;
-            if (i == 0)         //SKIN COLOUR
-            {
-                a = Random.Range(0, characters.Length - 3);
-                man_sprite.color = man_colours[a];
-            }
-            if (i == 1)         //HAIR COLOUR
-            {
-                a = Random.Range(0, characters.Length - 2);
-                hair_sprite.color = hair_colours[a];
-            }
-            if (i == 2)         //SHIELD
-            {
-                a = Random.Range(0, characters.Length - 3);
-                shield.sprite = shields[a];
-            }
-            if (i == 3) //gender
-            {
-                a = Random.Range(0, 2);
-                if (a == 0)
-                {
-                    gender = "Male";
-                }
-                else
-                {
-                    gender = "Female";
-                }
-            }
-            if (i == 4)
-            {
 
-                eachLine = new List<string>();
-                eachLine.AddRange(
-                            wholeString.Split("\n"[0]));
+            code = null;
 
-                a = Random.Range(0, 8);
-                name1 = a;
-            }
-            if (i == 5)
+            GameObject an1 = Instantiate(manPrefab);
+            GameObject an2 = Instantiate(hairPrefab);
+            GameObject an3 = Instantiate(shieldPrefab);
+
+            an1.transform.parent = transform;
+            an2.transform.parent = transform;
+            an3.transform.parent = transform;
+
+            an1.transform.localScale = an2.transform.localScale = an3.transform.localScale = Vector3.one;
+
+            man_sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+            hair_sprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+            shield = transform.GetChild(2).GetComponent<SpriteRenderer>();
+
+            wholeString = textFile.text;
+            man_sprite.GetComponent<SpriteRenderer>().enabled = true;
+
+            for (int i = 0; i < 7; i++)
             {
-                a = Random.Range(0, 8);
-                name2 = a;
-                if (gender == "Male")
+                int a = 0;
+                if (i == 0)         //SKIN COLOUR
                 {
-                    sum = (name1 * 10 + name2);
-                    name =
-                        eachLine[sum];
+                    a = Random.Range(0, characters.Length - 3);
+                    man_sprite.color = man_colours[a];
                 }
-                else
+                if (i == 1)         //HAIR COLOUR
                 {
-                    sum = (name1 * 10 + name2);
-                    name = eachLine[78 + sum];
+                    a = Random.Range(0, characters.Length - 2);
+                    hair_sprite.color = hair_colours[a];
                 }
-                nameText.text = "Say hello to " + name + "!";
+                if (i == 2)         //SHIELD
+                {
+                    a = Random.Range(0, characters.Length - 3);
+                    shield.sprite = shields[a];
+                }
+                if (i == 3) //gender
+                {
+                    a = Random.Range(0, 2);
+                    if (a == 0)
+                    {
+                        gender = "Male";
+                    }
+                    else
+                    {
+                        gender = "Female";
+                    }
+                }
+                if (i == 4)
+                {
 
+                    eachLine = new List<string>();
+                    eachLine.AddRange(
+                                wholeString.Split("\n"[0]));
+
+                    a = Random.Range(0, 8);
+                    name1 = a;
+                }
+                if (i == 5)
+                {
+                    a = Random.Range(0, 8);
+                    name2 = a;
+                    if (gender == "Male")
+                    {
+                        sum = (name1 * 10 + name2);
+                        name =
+                            eachLine[sum];
+                    }
+                    else
+                    {
+                        sum = (name1 * 10 + name2);
+                        name = eachLine[78 + sum];
+                    }
+                    nameText.text = "Say hello to " + name + "!";
+
+                }
+                if (i == 6)
+                {
+                    a = Random.Range(0, 3);
+                    if (gender == "Male")
+                    {
+                        hair_sprite.sprite = hair_types[a];
+                    }
+                    else
+                    {
+                        hair_sprite.sprite = hair_types[a + 3];
+                    }
+                }
+
+                //int a = Random.Range(0, characters.Length);
+                code = code + characters[a];
             }
-            if (i == 6)
+
+            print(PlayerPrefs.GetString("FirstPersonCode"));
+            if (PlayerPrefs.GetString("FirstPersonCode") == "")
             {
-                a = Random.Range(0, 3);
-                if (gender == "Male")
-                {
-                    hair_sprite.sprite = hair_types[a];
-                }
-                else
-                {
-                    hair_sprite.sprite = hair_types[a + 3];
-                }
+                PlayerPrefs.SetString("FirstPersonCode", code);
             }
+            GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(code);
+            GameObject.Find("Manager").GetComponent<PlayersManager>().totalPlayers++;
+            Invoke("Detach", 0.2f);
 
-            //int a = Random.Range(0, characters.Length);
-            code = code + characters[a];
         }
-
-        print(PlayerPrefs.GetString("FirstPersonCode"));
-        if (PlayerPrefs.GetString("FirstPersonCode") == "")
-        {
-            PlayerPrefs.SetString("FirstPersonCode", code);
-        }
-        GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(code);
-        Invoke("Detach", 0.2f);
-
-
     }
 
     public void GenerateOld(int othercode)

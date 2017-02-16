@@ -40,23 +40,22 @@ public class Husk : MonoBehaviour {
             }
         }
     }
-	// Update is called once per frame
-	void Update () {
+
+    void Update () {
 
         
         if (transform.childCount == 3)
         {
             FindFreeSpace();
 
-
             transform.localScale = Vector3.SmoothDamp(transform.localScale, new Vector3(0.25f, 0.25f, 0.25f), ref velocity, 0.1f);
             transform.position = Vector3.SmoothDamp(transform.position, newplace, ref velocity2, 0.1f);
             SpriteRenderer[] sprs = GetComponentsInChildren<SpriteRenderer>();
             for(int i = 0; i< transform.childCount; i++)
             {
-                transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * 100);
-                transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * 100 + 1);
-                transform.GetChild(2).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * 100 + 1);
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * -100);
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * -100 + 1);
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * -100 + 1);
             }
         }
 		
