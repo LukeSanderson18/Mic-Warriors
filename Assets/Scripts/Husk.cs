@@ -7,26 +7,56 @@ public class Husk : MonoBehaviour {
 	// Use this for initialization
     private Vector3 velocity = Vector3.zero;
     private Vector3 velocity2 = Vector3.zero;
-    float randInt1, randInt2;
+    int randShadow;
+    public List<GameObject> shadows;
+    bool foundPlace;
+    Vector3 newplace = Vector3.zero;
 
-	void Start () {
-        randInt1 = Random.Range(-2.5f, 2.5f);
-        randInt2 = Random.Range(-1f, -3f);
-	}
+
+    void Start () {
+
+        foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag("shadow"))
+        {
+            shadows.Add(fooObj);
+        }
+
+    }
 	
+    void FindFreeSpace()
+    {
+        randShadow = Random.Range(0, GameObject.FindGameObjectsWithTag("shadow").Length);
+        while (newplace == Vector3.zero && !foundPlace)
+        {
+            if (!shadows[randShadow].GetComponent<shadow>().taken)
+            {
+                newplace = shadows[randShadow].transform.position;
+                shadows[randShadow].GetComponent<shadow>().taken = true;
+                foundPlace = true;
+                //break;
+            }
+            else
+            {
+                FindFreeSpace();            //such bad code... OH WELL!
+            }
+        }
+    }
 	// Update is called once per frame
 	void Update () {
 
+        
         if (transform.childCount == 3)
         {
-            transform.localScale = Vector3.SmoothDamp(transform.localScale, new Vector3(0.25f, 0.25f, 0.25f), ref velocity, 0.4f);
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(randInt1,randInt2, transform.position.z), ref velocity2, 0.3f);
+            FindFreeSpace();
+
+
+            transform.localScale = Vector3.SmoothDamp(transform.localScale, new Vector3(0.25f, 0.25f, 0.25f), ref velocity, 0.1f);
+            transform.position = Vector3.SmoothDamp(transform.position, newplace, ref velocity2, 0.1f);
             SpriteRenderer[] sprs = GetComponentsInChildren<SpriteRenderer>();
             for(int i = 0; i< transform.childCount; i++)
             {
-                transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = (int)(randInt1 * 100);
-                transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = (int)(randInt1 * 100 + 1);
-                transform.GetChild(2).GetComponent<SpriteRenderer>().sortingOrder = (int)(randInt1 * 100 + 1);
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * 100);
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * 100 + 1);
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sortingOrder = (int)(transform.position.y * 100 + 1);
             }
         }
 		

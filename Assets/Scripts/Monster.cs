@@ -23,6 +23,7 @@ public class Monster : MonoBehaviour
             int min2 = min += 1;
             PlayerPrefs.SetInt("monsterNumber", min2);
             GameObject.Find("MonsterGen").GetComponent<MonsterGenerator>().Generate();
+            Destroy(GameObject.Find("name"), 0);
             Destroy(this.gameObject, 0);
         }
 

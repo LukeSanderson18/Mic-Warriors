@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MonsterGenerator : MonoBehaviour
 {
@@ -41,6 +40,8 @@ public class MonsterGenerator : MonoBehaviour
         GameObject monster = Instantiate(monsterHusk, new Vector2(0, 2), Quaternion.identity);
         monster.transform.localScale = Vector3.one * 4;
         monster.name = monsterSprites[randInt].name;
+        monster.transform.GetChild(0).GetComponent<TextMesh>().text = monster.name;
+        monster.transform.GetChild(0).parent = null;
 
         mon = monster.GetComponent<Monster>();
         mon.GetComponent<SpriteRenderer>().sprite = monsterSprites[randInt];

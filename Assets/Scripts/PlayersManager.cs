@@ -23,7 +23,7 @@ public class PlayersManager : MonoBehaviour {
 
     IEnumerator Create(float delayTime, int playerTING)
     {
-        yield return new WaitForSeconds(delayTime+1.4f);
+        yield return new WaitForSeconds((delayTime/2)+0.2f);
         GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(playerTING);
     }
 
