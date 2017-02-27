@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Mic : MonoBehaviour
 {
 
-
+    public Text listeningText;
     AudioSource audio;
 
     public float sensitivity = 100f;
@@ -25,11 +25,11 @@ public class Mic : MonoBehaviour
 
         audio = GetComponent<AudioSource>();
         audio.loop = true;
-        audio.mute = true;
+        //audio.mute = true;
         //record from first audio device, loop it, 10 seconds length, Hz;
         audio.clip = Microphone.Start(null, true, 10, 44100);
 
-        while (!(Microphone.GetPosition(null) > 0)) { } // Wait until the recording has started
+        while (!(Microphone.GetPosition(null) != 0)) { } // Wait until the recording has started
         audio.mute = false;
         audio.Play();
 
@@ -74,5 +74,7 @@ public class Mic : MonoBehaviour
         loud = AverageVol() * sensitivity;
         frequency = GetFundamentalFrequency();
         //transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "" + loud;
+
+        listeningText.text = "" + frequency;
     }
 }

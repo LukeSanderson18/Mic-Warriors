@@ -58,7 +58,7 @@ public class PlayersManager : MonoBehaviour {
             }
 
         }
-        /*
+        
         foreach (char c in newPlayerString)
         {
             if (c == 'C')
@@ -90,7 +90,7 @@ public class PlayersManager : MonoBehaviour {
                 newString += "7";
             }
         }
-         * */
+         
 
 
     }

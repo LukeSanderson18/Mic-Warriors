@@ -27,6 +27,15 @@ public class NoteTest : MonoBehaviour
 
     void Update()
     {
+        if (finalString.Length == 7)
+        {
+            GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(int.Parse(finalString));
+            print(int.Parse(finalString));
+            finalString = "";
+
+            finals.Clear();
+
+        }
         if (finals.Count == 7)
         {
             finalString = finals[0].ToString() + finals[1].ToString()
@@ -34,9 +43,11 @@ public class NoteTest : MonoBehaviour
                 + finals[4].ToString() + finals[5].ToString() +
                 finals[6].ToString();
 
+            
+
            // GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(finalString);
         }
-        if (Input.GetKey(KeyCode.L))
+        /*if (Input.GetKey(KeyCode.L))
         {
             listening = true;
         }
@@ -45,9 +56,11 @@ public class NoteTest : MonoBehaviour
             listening = false;
             finals.Clear();
         }
+         * */
 
         if (listening)
         {
+            print("i am listening");
             int frequency = (int)mic.frequency;
 
             //PC FREQUENCIES
@@ -127,7 +140,11 @@ public class NoteTest : MonoBehaviour
             else if (frequency < 100)
             {
                 allower = true;
-                text.text = ""+frequency;
+                text.text = "" + frequency;
+            }
+            else
+            {
+                text.text = "" + frequency;
             }
 
             switch (Input.inputString)

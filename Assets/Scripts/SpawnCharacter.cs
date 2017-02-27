@@ -296,6 +296,7 @@ public class SpawnCharacter : MonoBehaviour
         {
             Generate();
 
+
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
