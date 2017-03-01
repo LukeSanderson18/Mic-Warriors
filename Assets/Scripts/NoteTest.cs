@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class NoteTest : MonoBehaviour
 {
-    bool allower = true;
+    public Text finaStringText;
+    public bool allower = true;
     public string finalString;
-    public List<string> finals;
+    public List<int> finals;
     public bool listening;
     public Text text;
     public GameObject micGO;
@@ -17,7 +18,9 @@ public class NoteTest : MonoBehaviour
 
     void Start()
     {
-
+        //
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        //
         micGO = GameObject.Find("Mic Manager");
         mic = micGO.GetComponent<Mic>();
         transform_list = GetComponentsInChildren<Transform>();
@@ -27,6 +30,8 @@ public class NoteTest : MonoBehaviour
 
     void Update()
     {
+       // finaStringText.text = finals[0].ToString() + finals[1].ToString() + finals[2].ToString() + finals[3].ToString() + finals[4].ToString() + finals[5].ToString() + finals[6].ToString();
+
         if (finalString.Length == 7)
         {
             GameObject.Find("ManTest").GetComponent<SpawnCharacter>().GenerateOld(int.Parse(finalString));
@@ -43,9 +48,9 @@ public class NoteTest : MonoBehaviour
                 + finals[4].ToString() + finals[5].ToString() +
                 finals[6].ToString();
 
-            
 
-           // GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(finalString);
+
+            // GameObject.Find("Manager").GetComponent<PlayersManager>().AddPlayer(finalString);
         }
         /*if (Input.GetKey(KeyCode.L))
         {
@@ -64,75 +69,84 @@ public class NoteTest : MonoBehaviour
             int frequency = (int)mic.frequency;
 
             //PC FREQUENCIES
+
             if (frequency == 239 || frequency == 240
-                || frequency == 479 || frequency == 480)
+                || frequency == 479 || frequency == 480
+                || (frequency >= 958 && frequency <= 961))
             {
                 text.text = "C";
                 if (allower)
                 {
-                    finals.Add("C");
+                    finals.Add(1);
                     allower = false;
                 }
             }
             if (frequency == 269 || frequency == 270
-                || frequency == 539 || frequency == 540)
+                || frequency == 539 || frequency == 540
+                || (frequency >= 806 && frequency <= 810))
             {
                 text.text = "D";
                 if (allower)
                 {
-                    finals.Add("D");
+                    finals.Add(2);
                     allower = false;
                 }
 
             }
             if (frequency == 302 || frequency == 454
                 || frequency == 604 || frequency == 605
-                || frequency == 606)
+                || frequency == 606
+                || (frequency >= 907 && frequency <= 909))
             {
                 text.text = "E";
                 if (allower)
                 {
-                    finals.Add("E");
+                    finals.Add(3);
                     allower = false;
                 }
             }
             if (frequency == 321 || frequency == 322
-                || frequency == 640 || frequency == 641)
+                || frequency == 640 || frequency == 641
+                || frequency == 481
+                || (frequency >= 962 && frequency <= 964))                        //this is bad!!!
             {
                 text.text = "F";
                 if (allower)
                 {
-                    finals.Add("F");
+                    finals.Add(4);
                     allower = false;
                 }
             }
             if (frequency == 360 || frequency == 361
-                || frequency == 721 || frequency == 718)
+                || frequency == 721 || frequency == 718
+                || (frequency >= 1079 && frequency <= 1083))
             {
                 text.text = "G";
                 if (allower)
                 {
-                    finals.Add("G");
+                    finals.Add(5);
                     allower = false;
                 }
             }
-            if ( frequency == 201 || frequency == 203 || frequency == 405
-                || frequency == 403)
+            if (frequency == 201 || frequency == 203 || frequency == 405
+                || frequency == 403
+                || (frequency >= 1214 && frequency <= 1218))
             {
                 text.text = "A";
                 if (allower)
                 {
-                    finals.Add("A");
+                    finals.Add(6);
                     allower = false;
                 }
             }
             if (frequency == 227 || frequency == 228
-                || frequency == 453 || frequency == 454)
+                || frequency == 453 || frequency == 454
+                || (frequency >= 909 && frequency <= 913))
             {
                 text.text = "B";
                 if (allower)
                 {
-                    finals.Add("B");
+                    finals.Add(7);
                     allower = false;
                 }
             }
@@ -140,11 +154,11 @@ public class NoteTest : MonoBehaviour
             else if (frequency < 100)
             {
                 allower = true;
-                text.text = "" + frequency;
+                // text.text = "" + frequency;
             }
             else
             {
-                text.text = "" + frequency;
+                // text.text = "" + frequency;
             }
 
             switch (Input.inputString)
@@ -193,7 +207,9 @@ public class NoteTest : MonoBehaviour
                     //print("press different key!");
                     break;
             }
+
         }
+       
 
 
     }

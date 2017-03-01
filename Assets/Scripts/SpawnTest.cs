@@ -18,12 +18,14 @@ public class SpawnTest : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float i = mic.loud;
+
+        //print(i + "," + threshold);
         if (i > threshold)
         {
             print("WORKS WORKS WORKS!");
-            Vector3 test = Vector3.one;
-            GameObject an = Instantiate(prefab, transform.position, Quaternion.identity);
-            an.transform.localScale += test;
+          //  Vector3 test = Vector3.one;
+          //  GameObject an = Instantiate(prefab, transform.position, Quaternion.identity);
+           // an.transform.localScale += test;
         }
 	}
 }

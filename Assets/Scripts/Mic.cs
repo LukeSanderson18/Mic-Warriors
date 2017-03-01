@@ -10,8 +10,9 @@ public class Mic : MonoBehaviour
     public Text listeningText;
     AudioSource audio;
 
+    public float loud = 0.0f;
     public float sensitivity = 100f;
-    public float loud = 0;
+    //public float loud = 0;
     public int samplerate = 11024;
 
     public float frequency = 0f;
@@ -27,7 +28,7 @@ public class Mic : MonoBehaviour
         audio.loop = true;
         //audio.mute = true;
         //record from first audio device, loop it, 10 seconds length, Hz;
-        audio.clip = Microphone.Start(null, true, 10, 44100);
+        audio.clip = Microphone.Start(null, false, 999, 44100);
 
         while (!(Microphone.GetPosition(null) != 0)) { } // Wait until the recording has started
         audio.mute = false;

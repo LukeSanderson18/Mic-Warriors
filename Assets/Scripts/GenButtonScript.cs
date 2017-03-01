@@ -42,6 +42,8 @@ public class GenButtonScript : MonoBehaviour
         else
         {
             GetComponent<Image>().color = Color.white;
+            nt.finalString = "";
+            nt.finals.Clear();
 
         }
     }
